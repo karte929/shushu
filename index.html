@@ -106,60 +106,197 @@
         <div class="text-box">
             <p>现实的压力，家庭的琐碎，渐行渐远的脚步。</p >
             <p>24年年底那些糟糕的瞬间，</p >
-            <p>很遗憾，我没能真正为你排忧解难。</p >
-            <p>但我也明白，成年人的友谊，有时只需要那份远方的惦念。</p >
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给舒舒：四年的同频与祝愿</title>
+    <style>
+        :root { --accent: #d4a373; --bg: #0a0a0a; --text: #e0e0e0; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: var(--text); font-family: "PingFang SC", sans-serif; overflow: hidden; }
+        
+        /* 关卡通用样式 */
+        .stage { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 1.2s ease-in-out; background-size: cover; background-position: center; background-blend-mode: multiply; background-color: rgba(0,0,0,0.85); }
+        .stage.active { opacity: 1; pointer-events: auto; }
+
+        .container { width: 85%; max-width: 500px; text-align: center; }
+        .title { font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 20px; color: var(--accent); }
+        .content { font-size: 0.95rem; line-height: 1.8; margin-bottom: 30px; color: #bbb; }
+        .hint { font-size: 0.75rem; color: #666; margin-top: 15px; }
+
+        /* 关卡1: 调音 */
+        .wave-box { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 20px; }
+        .bar { width: 4px; background: var(--accent); transition: height 0.1s; }
+
+        /* 关卡2: 连线 (简化版) */
+        .bridge-game { width: 200px; height: 100px; border-bottom: 2px dashed #444; position: relative; margin: 0 auto; }
+        .dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; position: absolute; bottom: -5px; transition: 0.5s; }
+
+        /* 关卡3: 收集 */
+        .gift-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .item { padding: 15px; border: 1px solid #333; font-size: 1.2rem; cursor: pointer; filter: grayscale(1); transition: 0.3s; }
+        .item.active { border-color: var(--accent); filter: grayscale(0); transform: scale(1.1); }
+
+        /* 关卡4: 漂流 */
+        .boat-area { width: 100%; height: 150px; position: relative; overflow: hidden; border: 1px solid #222; }
+        .boat { position: absolute; font-size: 20px; transition: 2s ease-in-out; }
+
+        /* 按钮 */
+        .btn { padding: 12px 35px; border: 1px solid var(--accent); background: none; color: var(--accent); cursor: pointer; opacity: 0; transform: translateY(10px); transition: 0.5s; pointer-events: none; }
+        .btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        /* 终章: 信件 */
+        #stage5 { overflow-y: auto; display: block; padding: 60px 25px; box-sizing: border-box; background: #0f0f0f; }
+        .letter-text { max-width: 600px; margin: 0 auto; line-height: 2.2; color: #ccc; white-space: pre-wrap; text-align: justify; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" loop><source src="bgm.mp3" type="audio/mpeg"></audio>
+
+    <!-- 关卡 0: 入场 -->
+    <div id="stage0" class="stage active">
+        <div class="container">
+            <div class="title">1991.05.14 / 09:45</div>
+            <div class="content">在这个坐标诞生的频率，<br>在四年前，闯入了我的世界。</div>
+            <button class="btn visible" onclick="start()">开启这段叙事</button>
         </div>
-        <button class="btn" onclick="nextStage(3)">[ 下一页：定格 ]</button>
     </div>
 
-    <!-- 第四关：2025-2026 -->
-    <div id="stage4" class="stage">
-        <div class="text-box">
-            <p>旅行因为生病暂停了，生活变得安静。</p >
-            <p>直到第四个五月，生日如约而至。</p >
-            <p>有些话，不想只是藏在心里，</p >
-            <p>于是我把它们，写成了给你的这封信。</p >
+    <!-- 第1关: 频率的交汇 (BPM互动) -->
+    <div id="stage1" class="stage" style="background-image: url('bg1.jpg');">
+        <div class="container">
+            <div class="title">第1章：频率</div>
+            <div class="content">那是疫情中没有窗户的房间。<br>调准这个频率，让光照进来。</div>
+            <div class="wave-box" id="waveBox"></div>
+            <input type="range" min="40" max="120" value="40" style="width:100%" oninput="tune(this.value)">
+            <p id="bpmVal">40 BPM</p>
+            <p class="hint">滑动滑块，找到你最熟悉的 80 BPM</p>
+            <button id="btn1" class="btn" onclick="next(1)">频率对齐，故事开始</button>
         </div>
-        <button class="btn" onclick="nextStage(4)">[ 开启最后一段话 ]</button>
     </div>
 
-    <!-- 终章：原信件 -->
-    <div id="stage-end" class="stage">
-        <div class="letter-content">
-            <p class="letter-title">舒舒，我的最最最好朋友：</p >
-            
-            <p>写这封信之前我犹豫了很久，怕在每个人都匆匆忙忙的时代，突然的联络会变成一种打扰。趁你生日之际，相识四年的情分，还是想认真地将所思所想封存在文字里送给你。</p >
-            
-            <p>我们从最初的无话不谈，到如今因为生活的压力和各自的奔波而渐行渐远，这或许是成年人友谊的一种常态。我知道你现在的身份更多了，要支撑起一个家庭，要面对很多琐碎的压力。金牛座的你总是很坚韧，但我深感背后您一定也有苦恼失望沮丧麻木的时候。</p >
+    <!-- 第2关: 孤岛与桥 (消息互动) -->
+    <div id="stage2" class="stage" style="background-image: url('bg2.jpg');">
+        <div class="container">
+            <div class="title">第2章：孤岛</div>
+            <div class="content">世界停摆时，每个人都是孤岛。<br>我们通过“信任”搭建了桥梁。</div>
+            <div class="bridge-game">
+                <div id="dot1" class="dot" style="left: 0;"></div>
+                <div id="dot2" class="dot" style="right: 0; opacity: 0.3;"></div>
+            </div>
+            <p class="hint">多次点击“发射信号”，连接两座孤岛</p>
+            <button class="btn visible" onclick="buildBridge()">发送消息</button>
+            <button id="btn2" class="btn" onclick="next(2)">桥梁落成</button>
+        </div>
+    </div>
 
-            <p>作为一个心思比较细腻的小I人，所以更懂得这种“疏离”背后的重量。不想干扰你现有的平静，在人海长廊中过客匆匆与你相遇，这世界有你是一件很珍贵的事。</p >
+    <!-- 第3关: 和弦 (记忆收集) -->
+    <div id="stage3" class="stage" style="background-image: url('bg3.jpg');">
+        <div class="container">
+            <div class="title">第3章：和弦</div>
+            <div class="content">那些被你分享的秘密、旅行和礼物，<br>构成了这四年的重量。</div>
+            <div class="gift-box">
+                <div class="item" onclick="collect(this)">🎹</div>
+                <div class="item" onclick="collect(this)">🎁</div>
+                <div class="item" onclick="collect(this)">✈️</div>
+                <div class="item" onclick="collect(this)">📽️</div>
+                <div class="item" onclick="collect(this)">☕</div>
+                <div class="item" onclick="collect(this)">🔓</div>
+            </div>
+            <p class="hint">点击点亮所有记忆碎片</p>
+            <button id="btn3" class="btn" onclick="next(3)">记忆已存档</button>
+        </div>
+    </div>
 
-            <p>现在的我们就像两条平行的线，交集变少。但我始终在你的人群里敞开着一扇门，等你在想逃避现实的繁杂难事琐碎坏绪时进来。我会一直留存“我知道你过得好，就足够了”的念想，在远方望着好朋友的你出神。</p >
-            
-            <p>谢谢你出现在我不切实际充满幻想的雾霾世界里，打着一束光照着我前进。</p >
+    <!-- 第4关: 休止符 (漂流叙事) -->
+    <div id="stage4" class="stage" style="background-image: url('bg4.jpg');">
+        <div class="container">
+            <div class="title">第4章：潮汐</div>
+            <div class="content">轨迹总会因为现实而分岔，<br>哪怕不再并排航行，也依然各自闪光。</div>
+            <div class="boat-area">
+                <div id="boat1" class="boat" style="top: 30px; left: 10px;">⛵</div>
+                <div id="boat2" class="boat" style="top: 80px; left: 10px;">⛵</div>
+            </div>
+            <p class="hint">点击“顺应水流”，看时间带我们去哪</p>
+            <button class="btn visible" onclick="drift()">顺应水流</button>
+            <button id="btn4" class="btn" onclick="next(4)">坦然接受，最后祝愿</button>
+        </div>
+    </div>
 
-            <p class="letter-footer">
-                祝你生日快乐，平安顺遂。<br>
-                你的好朋友<br>
-                2026年5月14日
-            </p >
+    <!-- 第5关: 尾奏 (最终信件) -->
+    <div id="stage5" class="stage">
+        <div class="letter-text">
+舒舒，我的最最最好朋友：
+
+写这封信之前我犹豫了很久，怕在每个人都匆匆忙忙的时代，突然的联络会变成一种打扰。趁你生日之际，相识四年的情分，还是想认真地将所思所想封存在文字里送给你。
+
+我们从最初的无话不谈，到如今因为生活的压力和各自的奔波而渐行渐远，这或许是成年人友谊的一种常态。我知道你现在的身份更多了，要支撑起一个家庭，要面对很多琐碎的压力。金牛座的你总是很坚韧，但我深感背后您一定也有苦恼失望沮丧麻木的时候。
+
+作为一个心思比较细腻的小I人，所以更懂得这种“疏离”背后的重量。不想干扰你现有的平静，在人海长廊中过客匆匆与你相遇，这世界有你是一件很珍贵的事。
+
+现在的我们就像两条平行的线，交集变少。但我始终在你的人群里敞开着一扇门，等你在想逃避现实的繁杂难事琐碎坏绪时进来。我会一直留存“我知道你过得好，就足够了”的念想，在远方望着好朋友的你出神。
+
+谢谢你出现在我不切实际充满幻想的雾霾世界里，打着一束光照着我前进。
+
+                                你的好朋友
+                                2026年5月14日
         </div>
     </div>
 
     <script>
-        function startGame() {
-            const bgm = document.getElementById('bgm');
-            bgm.play().catch(e => console.log("需用户手动播放音频"));
-            nextStage(0);
+        // 初始化音柱
+        const waveBox = document.getElementById('waveBox');
+        for(let i=0; i<15; i++) {
+            let bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.height = '20px';
+            waveBox.appendChild(bar);
         }
 
-        function nextStage(index) {
-            document.getElementById('stage' + index).classList.remove('active');
-            if(index === 4) {
-                document.getElementById('stage-end').classList.add('active');
-            } else {
-                document.getElementById('stage' + (index + 1)).classList.add('active');
+        function start() { document.getElementById('bgm').play(); next(0); }
+        function next(curr) {
+            document.getElementById('stage'+curr).classList.remove('active');
+            document.getElementById('stage'+(curr+1)).classList.add('active');
+        }
+
+        // 关卡1: 调音
+        function tune(val) {
+            document.getElementById('bpmVal').innerText = val + " BPM";
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach(b => { b.style.height = (Math.random() * val/2 + 10) + 'px'; });
+            if(val == 80) { document.getElementById('btn1').classList.add('visible'); }
+        }
+
+        // 关卡2: 连线
+        let clicks = 0;
+        function buildBridge() {
+            clicks++;
+            document.getElementById('dot1').style.left = (clicks * 20) + 'px';
+            if(clicks >= 9) { 
+                document.getElementById('dot2').style.opacity = "1";
+                document.getElementById('btn2').classList.add('visible'); 
             }
+        }
+
+        // 关卡3: 收集
+        let items = 0;
+        function collect(el) {
+            if(!el.classList.contains('active')) {
+                el.classList.add('active');
+                items++;
+                if(items >= 6) document.getElementById('btn3').classList.add('visible');
+            }
+        }
+
+        // 关卡4: 漂流
+        function drift() {
+            document.getElementById('boat1').style.left = "80%";
+            document.getElementById('boat1').style.top = "10px";
+            document.getElementById('boat2').style.left = "70%";
+            document.getElementById('boat2').style.top = "110px";
+            setTimeout(() => { document.getElementById('btn4').classList.add('visible'); }, 2000);
         }
     </script>
 </body>
