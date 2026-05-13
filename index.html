@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给舒舒：四年的同频与守护</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #0d0d0d; color: #f0f0f0;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+        }
+        
+        .stage {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 1.5s ease-in-out;
+            background-size: cover; background-position: center; background-blend-mode: multiply;
+        }
+
+        .stage.active { opacity: 1; pointer-events: auto; }
+
+        /* 背景颜色遮罩，增强氛围感 */
+        #stage0 { background-color: #000; }
+        #stage1 { background-image: url('bg1.jpg'); background-color: rgba(0, 0, 0, 0.85); }
+        #stage2 { background-image: url('bg2.jpg'); background-color: rgba(10, 10, 10, 0.8); }
+        #stage3 { background-image: url('bg3.jpg'); background-color: rgba(15, 15, 15, 0.85); }
+        #stage4 { background-image: url('bg4.jpg'); background-color: rgba(20, 15, 10, 0.75); }
+        
+        /* 最后一页信件页：允许滚动，背景稍亮一点像纸张 */
+        #stage-end { 
+            background-color: #161616; 
+            overflow-y: auto; 
+            display: block; 
+            padding: 80px 25px; 
+            box-sizing: border-box; 
+        }
+
+        .text-box {
+            max-width: 85%; text-align: center; line-height: 1.8; font-size: 1.05rem;
+            letter-spacing: 1.5px; text-shadow: 1px 1px 5px rgba(0,0,0,1);
+            margin-bottom: 40px; color: #e0e0e0;
+        }
+
+        .btn {
+            padding: 10px 25px; border: 1px solid rgba(255, 255, 255, 0.4);
+            background: transparent; color: #fff; font-size: 0.9rem; letter-spacing: 1px;
+            cursor: pointer; border-radius: 2px; transition: all 0.3s ease;
+        }
+        .btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+        .letter-content {
+            max-width: 550px; margin: 0 auto; line-height: 2.1; font-size: 1rem;
+            color: #ccc; text-align: justify;
+        }
+        .letter-content p { margin-bottom: 25px; text-indent: 2em; }
+        .letter-title { text-align: left; text-indent: 0 !important; font-weight: bold; color: #fff; font-size: 1.2rem; }
+        .letter-footer { text-align: right; text-indent: 0 !important; margin-top: 50px; color: #999; }
+        
+        /* 简单的打字机效果装饰 */
+        .typing { border-right: 2px solid transparent; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { border-color: #fff; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 序章 -->
+    <div id="stage0" class="stage active">
+        <div class="text-box">
+            <p>有些频率，在茫茫人海中跨越了光阴，</p >
+            <p>在2022年的那个瞬间，刚好重合。</p >
+            <p>四年。1460天。祝你生日快乐，舒舒。</p >
+        </div>
+        <button class="btn" onclick="startGame()">点击开启回忆存档</button>
+    </div>
+
+    <!-- 第一关：2022 -->
+    <div id="stage1" class="stage">
+        <div class="text-box">
+            <p>那年，我被关在那个没有窗户的房间，</p >
+            <p>是你通过B站的音乐，推开了那扇紧闭的门。</p >
+            <p>那笔预定款解了我的燃眉之急，</p >
+            <p>而那些聊不完的天，成了照进黑暗里的光。</p >
+        </div>
+        <button class="btn" onclick="nextStage(1)">[ 下一页：信任 ]</button>
+    </div>
+
+    <!-- 第二关：2023 -->
+    <div id="stage2" class="stage">
+        <div class="text-box">
+            <p>这一年，我们交换了礼物，也交换了生活。</p >
+            <p>你分享了私密账号，让我看遍了你的旅行，</p >
+            <p>即便隔着12年的光阴，</p >
+            <p>我们依然在这个赛博时空里，成为了最默契的旁观者。</p >
+        </div>
+        <button class="btn" onclick="nextStage(2)">[ 下一页：现实 ]</button>
+    </div>
+
+    <!-- 第三关：2024 -->
+    <div id="stage3" class="stage">
+        <div class="text-box">
+            <p>现实的压力，家庭的琐碎，渐行渐远的脚步。</p >
+            <p>24年年底那些糟糕的瞬间，</p >
+            <p>很遗憾，我没能真正为你排忧解难。</p >
+            <p>但我也明白，成年人的友谊，有时只需要那份远方的惦念。</p >
+        </div>
+        <button class="btn" onclick="nextStage(3)">[ 下一页：定格 ]</button>
+    </div>
+
+    <!-- 第四关：2025-2026 -->
+    <div id="stage4" class="stage">
+        <div class="text-box">
+            <p>旅行因为生病暂停了，生活变得安静。</p >
+            <p>直到第四个五月，生日如约而至。</p >
+            <p>有些话，不想只是藏在心里，</p >
+            <p>于是我把它们，写成了给你的这封信。</p >
+        </div>
+        <button class="btn" onclick="nextStage(4)">[ 开启最后一段话 ]</button>
+    </div>
+
+    <!-- 终章：原信件 -->
+    <div id="stage-end" class="stage">
+        <div class="letter-content">
+            <p class="letter-title">舒舒，我的最最最好朋友：</p >
+            
+            <p>写这封信之前我犹豫了很久，怕在每个人都匆匆忙忙的时代，突然的联络会变成一种打扰。趁你生日之际，相识四年的情分，还是想认真地将所思所想封存在文字里送给你。</p >
+            
+            <p>我们从最初的无话不谈，到如今因为生活的压力和各自的奔波而渐行渐远，这或许是成年人友谊的一种常态。我知道你现在的身份更多了，要支撑起一个家庭，要面对很多琐碎的压力。金牛座的你总是很坚韧，但我深感背后您一定也有苦恼失望沮丧麻木的时候。</p >
+
+            <p>作为一个心思比较细腻的小I人，所以更懂得这种“疏离”背后的重量。不想干扰你现有的平静，在人海长廊中过客匆匆与你相遇，这世界有你是一件很珍贵的事。</p >
+
+            <p>现在的我们就像两条平行的线，交集变少。但我始终在你的人群里敞开着一扇门，等你在想逃避现实的繁杂难事琐碎坏绪时进来。我会一直留存“我知道你过得好，就足够了”的念想，在远方望着好朋友的你出神。</p >
+            
+            <p>谢谢你出现在我不切实际充满幻想的雾霾世界里，打着一束光照着我前进。</p >
+
+            <p class="letter-footer">
+                祝你生日快乐，平安顺遂。<br>
+                你的好朋友<br>
+                2026年5月14日
+            </p >
+        </div>
+    </div>
+
+    <script>
+        function startGame() {
+            const bgm = document.getElementById('bgm');
+            bgm.play().catch(e => console.log("需用户手动播放音频"));
+            nextStage(0);
+        }
+
+        function nextStage(index) {
+            document.getElementById('stage' + index).classList.remove('active');
+            if(index === 4) {
+                document.getElementById('stage-end').classList.add('active');
+            } else {
+                document.getElementById('stage' + (index + 1)).classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
